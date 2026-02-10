@@ -37,14 +37,29 @@
     }
 
     .envelope {
-      width: 260px;
-      height: 180px;
-      background: #fff;
-      margin: 30px auto;
-      border-radius: 10px;
-      position: relative;
-      cursor: pointer;
-      animation: slideIn 1.2s ease forwards;
+      width: 280px;
+  height: 180px;
+  background: #fff;
+  margin: 30px auto;
+  border-radius: 16px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope::before {
+  content: '💌';
+  font-size: 4rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
     }
 
     @keyframes slideIn {
@@ -53,13 +68,15 @@
     }
 
     .letter {
-      display: none;
-      background: #fff;
-      color: #b3002d;
-      padding: 20px;
-      border-radius: 12px;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  max-width: 320px;
+  margin: 0 auto;
+  display: none;
+  background: #fff;
+  color: #b3002d;
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     .letter.show {
@@ -122,7 +139,7 @@
   </style>
 </head>
 <body>
-  <audio autoplay loop>
+  <audio id="music" loop>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5b52d9a2e3.mp3" type="audio/mpeg">
   </audio>
 
@@ -130,7 +147,7 @@
     <h1>San Valentín</h1>
     <h2>No tiene por qué ser aburrido</h2>
 
-    <div class="envelope" onclick="openLetter()"></div>
+    <div class="envelope" id="envelope" onclick="openLetter()"></div>
 
     <div class="letter" id="letter">
       <img src="nosotros.jpg" alt="Nosotros" style="width:100%; border-radius:10px; margin-bottom:15px; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
@@ -157,8 +174,14 @@
 
     function openLetter() {
       document.getElementById('letter').classList.add('show');
-      for (let i = 0; i < 10; i++) createFloating();
-    }
+
+  document.getElementById('envelope').style.display = 'none';
+
+  const music = document.getElementById('music');
+  music.play();
+
+  for (let i = 0; i < 10; i++) createFloating();
+  }
 
     function createFloating() {
       const el = document.createElement('div');
